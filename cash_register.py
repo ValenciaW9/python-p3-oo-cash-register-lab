@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-p
+import io
+import sys
 
 class CashRegister:
     def __init__(self):
         self.total = 0
         self.items = []
         self.last_transaction_amount = 0
+        self.discount = 0
 
     def add_item(self, title, price, quantity=1):
         item_total = price * quantity
@@ -13,9 +15,9 @@ class CashRegister:
         self.items.extend([title] * quantity)
         self.last_transaction_amount = item_total
 
-    def apply_discount(self, discount):
-        if discount > 0:
-            self.total -= self.total * (discount / 100)
+    def apply_discount(self):
+        if self.discount > 0:
+            self.total -= self.total * (self.discount / 100)
             print(f"After the discount, the total comes to ${self.total}.")
         else:
             print("There is no discount to apply.")
