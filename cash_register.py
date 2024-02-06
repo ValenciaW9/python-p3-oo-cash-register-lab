@@ -1,11 +1,14 @@
-lass CashRegister:
+class CashRegister:
     def __init__(self, discount=0):
         self.discount = discount
         self.total = 0
         self.items = []
 
     def add_item(self, title, price, quantity=1):
-        self.total += float(price) * quantity
+        try:
+            self.total += float(price) * quantity
+        except ValueError:
+            print(f"Invalid price: {price}")
         self.items.extend([title] * quantity)
 
     def apply_discount(self):
@@ -19,4 +22,8 @@ lass CashRegister:
 
     def void_last_transaction(self):
         if self.items:
-            last_price = float(self.items.pop())
+            last_price = self.items.pop()
+            try:
+                self.total -= float(last_price)
+            except ValueError:
+                print(f"Invalid price: {last_price}")
