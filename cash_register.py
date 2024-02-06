@@ -1,23 +1,19 @@
 class CashRegister:
-    def __init__(self):
-        self.items = []
+    def __init__(self, discount=0):
+        self.discount = discount
         self.total = 0
-        self.discount = 0
+        self.items = []
 
-    def add_item(self, item_name, price, quantity):
-        self.items.append({"item_name": item_name, "price": price, "quantity": quantity})
+    def add_item(self, title, price, quantity=1):
         self.total += price * quantity
+        self.items.extend([title] * quantity)
 
-    def calculate_total(self):
-        return self.total
-
-    def apply_discount(self, discount_percentage):
-        if discount_percentage < 0 or discount_percentage > 100:
-            return "Invalid discount percentage"
-        self.total -= (self.total * discount_percentage) / 100
+    def apply_discount(self):
+        if self.discount > 0:
+            discount_amount = self.total * (self.discount / 100)
+            self.total -= discount_amount
 
     def void_last_transaction(self):
-        if not self.items:
-            return "No items to void"
-        last_item = self.items.pop()
-        self.total -= last_item["price"] * last_item["quantity"]
+        if self.items:
+            last_price = self.total - self.items.pop()
+            self.total -= last_price
