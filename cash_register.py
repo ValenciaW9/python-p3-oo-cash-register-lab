@@ -20,4 +20,3 @@ class CashRegister:
     def void_last_transaction(self):
         if self.items:
             last_price = float(self.items.pop())
-            self.total -= last_price
